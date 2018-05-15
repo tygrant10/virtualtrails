@@ -1,0 +1,33 @@
+﻿@model Capstone.Web.Models.ParkModel
+
+@{
+    ViewBag.Title = "ChooseTrail";
+}
+
+<div class="title-text">
+    <h1>@Model.Name</h1>
+    <h2>Choose your trail</h2>
+</div>
+
+<div id="map"></div>
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMTlmooQjxAlorbRMikqwVUu2nYApFy5Y&callback=initParkMap">
+</script>
+
+<div class="park-list-description">
+
+    @if (Model.Trails != null)
+    {
+        foreach (var trail in Model.Trails)
+        {
+            <div class="inner-box-park">
+                <img src="@trail.Image" />
+                <a href="@Url.Action("ViewTrail","VirtualTrails", new { trailName = trail.Name })">
+                    <h4>@trail.Name</h4>
+                </a>
+                <p>@trail.Description</p>
+            </div>
+        }
+    }
+</div>

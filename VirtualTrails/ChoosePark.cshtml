@@ -1,0 +1,28 @@
+﻿@model List<Capstone.Web.Models.ParkModel>
+@{
+    ViewBag.Title = "ChoosePark";
+}
+<div class="title-text">
+    <h3>Choose your park</h3>
+</div>
+
+<div id="map"></div>
+
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDMTlmooQjxAlorbRMikqwVUu2nYApFy5Y&callback=initMap">
+</script>
+
+<div class="park-list-description">
+
+    @foreach (var park in Model)
+    {
+        <div class="inner-box-park">
+            <img src="@park.Image" />
+            <a href="@Url.Action("ChooseTrail","VirtualTrails", new { id = @park.Name })">
+                <h4>@park.Name</h4>
+            </a>
+            <p>@park.Description</p>
+        </div>
+    }
+
+</div>

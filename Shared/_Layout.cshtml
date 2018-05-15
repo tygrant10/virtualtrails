@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Team&amp;</title>
+    <link href="~/Content/Site.css" rel="stylesheet" type="text/css" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/modernizr-2.6.2.js"></script>
+    <script src="~/Scripts/jquery-3.3.1.min.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Arimo|Do+Hyeon|Fjalla+One|Anonymous+Pro|Cutive+Mono|Belleza|Forum|Philosopher|Tenor+Sans" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.3.5/jquery.fancybox.min.js"></script>
+    <script src="~/Scripts/ParkMap.js"></script>
+</head>
+<body>
+    <script type="text/javascript">
+        let domainAddress;
+
+        if ("@Request.Url.Host" != "localhost") {
+            domainAddress = "@(Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host)";
+        }
+        else {
+            domainAddress = "@(Request.Url.Scheme + System.Uri.SchemeDelimiter + Request.Url.Host + ":" + Request.Url.Port)";
+        }
+    </script>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div id="logo-header">
+                <div class="left-header">
+                    <a href="@Url.Action("ChoosePark", "VirtualTrails")">
+                        <img src="https://s3.us-east-2.amazonaws.com/metropark/metropark_w.png" />
+                    </a>
+                </div>
+                <div class="right-header">
+                    <span>TEAM</span>
+                </div>
+                <div class="right-header-amp">
+                    <span>&amp;</span>
+                </div>
+            </div>
+        </div>
+        <div id="links-bar">
+            @if (User.Identity.IsAuthenticated)
+            {
+
+                using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { role = "form" }))
+                {
+                    <span>Welcome @(User.Identity.Name)!</span>
+                    <div class="btn-group">
+                        <input type="submit" value="Log Out" class="linkbar-button" />
+                        @Html.AntiForgeryToken()
+                    </div>
+                }
+            }
+            else
+            {
+                <form class="inline-form" method="get" action="@Url.Action("Login","Account", new { returnUrl = Request.Url.AbsoluteUri } )">
+                    <input type="submit" value="Log In" class="linkbar-button"/>
+                    <input type="hidden" name="returnUrl" value="@Request.Url.AbsoluteUri" />
+                </form>
+                <form class="inline-form" method="get" action="@Url.Action("Register","Account", new { returnUrl = Request.Url.AbsoluteUri } )">
+                    <input type="submit" value="Register" class="linkbar-button"/>
+                </form>
+            }
+        </div>
+    </div>
+
+    <div class="container body-content">
+        @RenderBody()
+    </div>
+
+    <footer>
+        <div class="logo-footer">
+            <div class="metroparks-footer">
+                <img src="https://s3.us-east-2.amazonaws.com/metropark/metropark_w.png" />
+            </div>
+            <div class="team-footer">
+                <span>TEAM</span>
+            </div>
+            <div class="ampersand-footer">
+                <span>&amp;</span>
+            </div>
+        </div>
+
+        <div class="link-footer">
+                @*Obviously erase this style tag after inserting its information into the site.css file once that's accessible. It was in use
+                    at the time of the creation of this tag. If possible, having the style tag within the current href be in the CSS file instead
+                    would be ideal, but I didn't have time to crunch it.*@
+                <style>
+                    a:hover {
+                        text-decoration: underline;
+                    }
+                </style>
+            <p>Contact</p>
+            <p>Feedback</p>
+            <p>Metroparks Home</p>
+            <p>Speak with a Naturalist</p>
+            <a href="https://www.clevelandmetroparks.com/" target="_blank" style="color: white;">Metroparks Home</a>
+            <p>the Making Of</p>
+        </div>
+
+        <div class="copyright-footer">
+            <p>&copy; @DateTime.Now.Year - TeamAmpersand</p>
+        </div>
+    </footer>
+
+
+
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</body>
+</html>
